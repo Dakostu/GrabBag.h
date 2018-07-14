@@ -17,12 +17,15 @@ class GrabBag {
 public:
     GrabBag();
     GrabBag(const std::vector<T> &newBag);
+    GrabBag(const GrabBag<T> &secondBag);
     
     void insert(T object);
     void insert(const std::vector<T> &objects);
     T grab();
     std::size_t size();
     bool empty();    
+    void operator+=(const GrabBag &b);
+    void operator+=(const std::vector<T> &vec);
 };
 
 // Class Definition -------------------------------------------------
@@ -38,9 +41,19 @@ GrabBag<T>::GrabBag() {}
  * GrabBag vector gets assigned to vector reference, size is set to vector size.
  */
 template <class T>
-GrabBag<T>::GrabBag(const std::vector<T> &newBag) {    
-    bag = newBag;
-    bagSize = newBag.size();
+GrabBag<T>::GrabBag(const std::vector<T> &vec) {    
+    bag = vec;
+    bagSize = vec.size();
+}
+
+/**
+ * Constructor with vector as parameter.
+ * GrabBag vector gets assigned to vector reference, size is set to vector size.
+ */
+template <class T>
+GrabBag<T>::GrabBag(const GrabBag<T> &secondBag) {    
+    bag = secondBag.bag;
+    bagSize = secondBag.size();
 }
 
 /**
@@ -111,6 +124,23 @@ template <class T>
 bool GrabBag<T>::empty() {
     return (size() == 0); 
 }
+
+/**
+ * Assignment addition operator with GrabBag parameter
+ */
+template <class T> 
+void GrabBag<T>::operator+=(const GrabBag &b){
+    this->insert(b.bag);
+}
+
+/**
+ * Assignment addition operator with vector parameter
+ */
+template <class T> 
+void GrabBag<T>::operator+=(const std::vector<T> &vec){
+    this->insert(vec);
+}
+
 
 
 #endif
