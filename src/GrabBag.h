@@ -26,18 +26,27 @@ public:
 };
 
 // Class Definition -------------------------------------------------
-#include <iostream>
+/**
+ * Default constructor.
+ * New, empty vector is instantiated, size is set to zero.
+ */
 template <class T>
-GrabBag<T>::GrabBag() {
-    bagSize = 0;
-}
+GrabBag<T>::GrabBag() {}
 
+/**
+ * Constructor with vector as parameter.
+ * GrabBag vector gets assigned to vector reference, size is set to vector size.
+ */
 template <class T>
 GrabBag<T>::GrabBag(const std::vector<T> &newBag) {    
     bag = newBag;
     bagSize = newBag.size();
 }
 
+/**
+ * Insert a single object into a GrabBag. 
+ * Throws an exception when GrabBag is full.
+ */
 template <class T>
 void GrabBag<T>::insert(T object) {
     if (this->size() == bag.max_size())
@@ -47,14 +56,21 @@ void GrabBag<T>::insert(T object) {
     ++bagSize;
 }
 
+/**
+ * Insert several objects into a GrabBag. 
+ * Calls insert(T object) iteratively.
+ */
 template <class T>
 void GrabBag<T>::insert(const std::vector<T> &objects) {
     for (T object : objects)
         insert(object);    
 }
 
+/**
+ * Generates a random number in the range [0, size).
+ */
 template <class T>
-std::size_t GrabBag<T>::getRandomIndex() {
+inline std::size_t GrabBag<T>::getRandomIndex() {
     std::random_device device;
     std::mt19937 mt(device());
     std::uniform_real_distribution<> dist(0, bagSize);
@@ -62,6 +78,10 @@ std::size_t GrabBag<T>::getRandomIndex() {
     return dist(mt);
 }
 
+/**
+ * Grabs a random element from a GrabBag. 
+ * Throws an exception when bag is empty.
+ */
 template <class T>
 T GrabBag<T>::grab() {
     if (this->empty()) 
@@ -76,11 +96,17 @@ T GrabBag<T>::grab() {
     return selectedObject;
 }
 
+/**
+ * Gets the amount of elements inside the GrabBag.
+ */
 template <class T>
 std::size_t GrabBag<T>::size() {
     return bagSize;
 }
 
+/**
+ * Checks if a GrabBag has a size of zero.
+ */
 template <class T>
 bool GrabBag<T>::empty() {
     return (size() == 0); 
