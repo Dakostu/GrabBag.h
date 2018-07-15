@@ -2,20 +2,22 @@
 #include <iostream>
 #include <set>
 
-
 int main() {
-    GrabBag<int> enalotto;
+    GrabBag<int> enaLottoPool;
+    GrabBag<int> superStarPool;
     std::set<int> mainNumbers;
     int jolly, superStar;
     
-    for (int i = 1; i <= 90; ++i)
-        enalotto.insert(i);
+    for (int i = 1; i <= 90; ++i) {
+        enaLottoPool.insert(i);
+        superStarPool.insert(i);
+    }
     
     for (int j = 0; j < 6; ++j)
-        mainNumbers.insert(enalotto.grab());
+        mainNumbers.insert(enaLottoPool.grab());
     
-    jolly = enalotto.grab();
-    superStar = enalotto.grab();
+    jolly = enaLottoPool.grab();
+    superStar = superStarPool.grab();
     
     // Output Main Numbers
     std::cout << "Main Numbers: ";
