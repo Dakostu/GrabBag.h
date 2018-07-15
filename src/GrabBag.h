@@ -24,7 +24,7 @@ public:
     T grab();
     std::size_t size();
     bool empty();    
-    void operator+=(const GrabBag &b);
+    void operator+=(T e);
     void operator+=(const std::vector<T> &vec);
 };
 
@@ -34,7 +34,9 @@ public:
  * New, empty vector is instantiated, size is set to zero.
  */
 template <class T>
-GrabBag<T>::GrabBag() {}
+GrabBag<T>::GrabBag() {
+    bagSize = 0;
+}
 
 /**
  * Constructor with vector as parameter.
@@ -47,13 +49,13 @@ GrabBag<T>::GrabBag(const std::vector<T> &vec) {
 }
 
 /**
- * Constructor with vector as parameter.
- * GrabBag vector gets assigned to vector reference, size is set to vector size.
+ * Copy constructor with GrabBag as parameter.
+ * This copies the attributes of the GrabBag parameter to this instance.
  */
 template <class T>
 GrabBag<T>::GrabBag(const GrabBag<T> &secondBag) {    
     bag = secondBag.bag;
-    bagSize = secondBag.size();
+    bagSize = secondBag.bagSize;
 }
 
 /**
@@ -126,11 +128,12 @@ bool GrabBag<T>::empty() {
 }
 
 /**
- * Assignment addition operator with GrabBag parameter
+ * Assignment addition operator with T element
+ * Just a fancy way to call insert(T object)
  */
 template <class T> 
-void GrabBag<T>::operator+=(const GrabBag &b){
-    this->insert(b.bag);
+void GrabBag<T>::operator+=(T e){
+    this->insert(e);
 }
 
 /**
