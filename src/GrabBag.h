@@ -138,6 +138,7 @@ void GrabBag<T>::operator+=(T e){
 
 /**
  * Assignment addition operator with vector parameter
+ * Just a fancy way to call insert(const std::vector<T> &objects)
  */
 template <class T> 
 void GrabBag<T>::operator+=(const std::vector<T> &vec){
