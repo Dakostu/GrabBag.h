@@ -1,0 +1,231 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[a4paper]{geometry}
+%\usepackage[utf8]{inputenc}
+\usepackage[pdfusetitle, hidelinks=true, colorlinks=true, urlcolor=linkcolor, linkcolor=black]{hyperref}
+\usepackage[all]{hypcap}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+\usepackage{titling}
+
+\renewcommand\maketitlehooka{\null\mbox{}\vfill}
+\renewcommand\maketitlehookd{\vfill\null}
+
+\definecolor{codeBG}{HTML}{f9f9fa}
+\definecolor{linkcolor}{rgb}{0,0,.4}
+
+\lstset{language=C++, 
+firstnumber=1,
+basicstyle=\ttfamily\scriptsize, 
+breaklines=true,
+frame=single, 
+showstringspaces=false,
+rulecolor=\color{black},
+keywordstyle=\color{blue},
+stringstyle=\color{ForestGreen},
+commentstyle=\itshape\color{Red}, 
+morecomment=[l][\color{Mahogany}]{\#},
+classoffset=1,% starting a new class
+morekeywords={GrabBag, set,vector, string}, 
+ keywordstyle=\color{blue},
+ classoffset=1,% starting a new class
+}
+
+\setlength{\parskip}{3.5pt}
+\setlength{\parindent}{0pt}
+
+
+\newcommand{\insertcode}[3]{
+\begin{figure}[h]
+  \lstinputlisting{#1}
+  \caption{#2}
+  \label{#3}
+\end{figure}
+}
+\newcommand{\packageversion}{1.0.0}
+\title{GrabBag -- A Data Structure \\ for Non-Deterministic Element Selection in C++11 \\~\\ \normalsize(Version \packageversion)}
+\author{Daniel Kostuj}
+
+\begin{document}
+
+\pagenumbering{gobble}
+\begin{titlingpage}
+\maketitle 
+\end{titlingpage}
+
+\newpage
+
+\pagenumbering{arabic}
+\section{Introduction}
+
+Imagine, in front of you: a paper bag, filled with objects of the same type that may or may not have different attributes. 
+A \emph{grab bag}, if you will. 
+
+Without looking into the bag, thrust your hand into it.
+If you can feel that the bag contains these objects, grab such an object and take it out of the bag.
+
+Now you can finally get a look at the object you picked.
+Only then do you truly know the selected object's attributes.
+
+The data structure \texttt{GrabBag<T>} tries to approximate this behavior, using a generic data type implementation.
+
+Essentially, it is a wrapper class for a \texttt{std::vector<T>} with its own methods, allowing for effective modularization.
+
+Under the hood, this class uses C++11 STL methods for full compability with C++11 and onwards.
+
+Should the need for a non-deterministic element selection arise: Choose wisely. Choose \texttt{GrabBag}.
+
+\section{Installation}
+
+The class \texttt{GrabBag} is fully implemented in the header file \texttt{GrabBag.h} inside the \texttt{src} folder. 
+Just copy this header file into your local project or global C++ library folder to use the \texttt{GrabBag} functionalities. 
+Usage examples are described in further detail in the next sections.
+
+In addition to the class definition, the folder \texttt{src} contains a unit test suite file \texttt{UnitTests.cpp}. 
+These unit tests are run every time a new commit is completed, however you can also run the unit tests by executing the \texttt{launchUnitTests.sh} script. 
+
+I'll misuse this space to thank the group behind the single-header unit testing framework \href{https://github.com/catchorg/Catch2/}{Catch2} for their great work.
+
+\newpage
+
+\section{Usage Examples}
+
+\subsection{Lottery}
+The most obvious \texttt{GrabBag} use case would be implementing a lottery program, where a fixed amount of numbers are drawn from a number pool.
+
+The following example is a program that simulates the Italian {\slshape SuperEnalotto} lottery. 
+
+In this particular lottery, seven numbers are drawn out of a pool of 90 numbers. 
+Also, a ``super star'' number is drawn out of a separate 90-number pool\footnote{An example of the lottery in action can be watched \href{https://www.youtube.com/watch?v=5xtAY_ouXgQ}{here}.}.
+
+\lstinputlisting{examples/example_lottery.cpp}
+
+Example output:
+
+\begin{lstlisting}[language=bash]
+$ ./a.out 
+Main Numbers: 18 25 35 43 68 87 
+Jolly: 6
+SuperStar: 8
+\end{lstlisting}
+
+\subsection{Permutation}
+
+A \texttt{GrabBag} can be used to randomly permutate an array-like structure of objects, as shown in the next example program. 
+
+The behavior of this program is reminiscent of the Fisher–Yates shuffle algorithm, also known as Knuth's Algorithm P.
+
+\lstinputlisting{examples/example_permutation.cpp}
+
+Example output:
+
+\begin{lstlisting}[language=bash]
+$ for i in {1..20}; do ./a.out Permutation; done
+meunioattrP
+tioPrtmeuna
+amtireoPtnu
+Piartuoemtn
+utamnitPreo
+unrttiaPome
+rPnutaieotm
+oemPtatunir
+ainotrPumet
+iatenrtuoPm
+aPiumeonttr
+tonmiaPuert
+aimPettunro
+iuaorntetmP
+ePmnrtutaio
+uonrmPetati
+Ptotimeuarn
+emrituPaont
+tnrtmoiPuae
+oPetmratinu
+
+\end{lstlisting}
+
+\subsection{Reservoir Sampling}
+  
+\newpage
+  
+\section{Methods}
+
+Here is a short overview of all methods defined inside the GrabBag, including small examples.
+
+
+\subsection{\texttt{GrabBag<T>()}}
+
+Instantiates an empty \texttt{GrabBag} that accepts elements of type \texttt{T}. 
+Size of \texttt{GrabBag} will be set to zero.
+
+\lstinputlisting{examples/example_4_1.cpp} 
+
+\subsection{\texttt{GrabBag<T>(const std::vector<T> \&newBag)}}
+
+Instantiates a \texttt{GrabBag} and assigns its content to the vector \texttt{newBag<T>}. 
+Size of \texttt{GrabBag} will be set to the size of vector.
+
+\lstinputlisting{examples/example_4_2.cpp} 
+
+\newpage
+
+\subsection{\texttt{GrabBag<T>(const GrabBag<T> \&secondBag)}}
+
+Copy constructor
+
+\lstinputlisting{examples/example_4_3.cpp}
+
+\subsection{\texttt{void insert(T object)}}
+
+Inserts the \texttt{object} of type \texttt{T}, preferably into a \texttt{GrabBag} of type \texttt{T}.
+
+\lstinputlisting{examples/example_4_4.cpp} 
+
+\newpage
+
+\subsection{\texttt{void insert(const std::vector<T> \&objects)}}
+
+Appends the content of vector \texttt{objects} to the \texttt{GrabBag} elements.
+
+\lstinputlisting{examples/example_4_5.cpp} 
+
+\subsection{\texttt{T grab()}}
+
+Returns an element from the \texttt{GrabBag} at a random index. 
+Afterwards, the \texttt{Grabbag} will not contain that element anymore.
+
+\lstinputlisting{examples/example_4_6.cpp}
+
+\newpage
+
+\subsection{\texttt{std::size\_t size()}}
+
+Returns the amount of elements that take up the \texttt{GrabBag} instance.
+
+\subsection{\texttt{bool empty()}}
+
+Return \texttt{true} if \texttt{size()} equals 0; otherwise, \texttt{false}.
+
+\lstinputlisting{examples/example_4_7_8.cpp}
+
+\subsection{\texttt{GrabBag<T>\& operator=(const GrabBag<T> \&secondBag)}}
+
+Copy assignment operator.
+
+\lstinputlisting{examples/example_4_9.cpp}
+
+\subsection{\texttt{void operator+=(T e)}}
+
+A fancy way to call \texttt{insert(T object)}.
+
+Syntactic sugar.
+
+\subsection{\texttt{void operator+=(const std::vector<T> \&vec)}}
+
+A fancy way to call \texttt{insert(const std::vector<T> \&objects)}.
+
+Again, syntactic sugar.
+
+\newpage
+\section{License}
+
+\end{document}

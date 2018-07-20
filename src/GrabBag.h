@@ -16,7 +16,7 @@ class GrabBag {
     
 public:
     GrabBag();
-    GrabBag(const std::vector<T> &newBag);
+    GrabBag(const std::vector<T> &vec);
     GrabBag(const GrabBag<T> &secondBag);
     
     void insert(T object);
@@ -24,6 +24,7 @@ public:
     T grab();
     std::size_t size();
     bool empty();    
+    GrabBag<T>& operator=(const GrabBag<T> &secondBag);
     void operator+=(T e);
     void operator+=(const std::vector<T> &vec);
 };
@@ -125,6 +126,19 @@ std::size_t GrabBag<T>::size() {
 template <class T>
 bool GrabBag<T>::empty() {
     return (size() == 0); 
+}
+
+/**
+ * Copy assignment operator
+ */
+template <class T>
+GrabBag<T>& GrabBag<T>::operator=(const GrabBag<T> &secondBag) {
+    if (&secondBag == this)
+        return *this;
+    
+    bag = secondBag.bag;
+    bagSize = secondBag.size();
+    return *this;
 }
 
 /**
