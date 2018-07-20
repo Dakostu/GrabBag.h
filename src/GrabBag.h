@@ -1,3 +1,17 @@
+/** 
+ * GrabBag.h
+ * 
+ * Declaration & definition of GrabBag class
+ * 
+ * @author Daniel Kostuj
+ * @date 21/07/2018
+ * 
+ * GrabBag is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ * For further explanation, consult the LICENSE repository file.
+ * 
+ */
+
+
 #ifndef GRABBAG_H
 #define GRABBAG_H
 
