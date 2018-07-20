@@ -24,6 +24,7 @@ The following example shows the usage of GrabBag inside such a lottery program.
 #include <iostream>
 #include <set>
 
+// Select 6 numbers out of 49 
 int main() {
     
     GrabBag<int> enaLottoPool;
