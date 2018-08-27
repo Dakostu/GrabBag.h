@@ -11,7 +11,6 @@
  * 
  */
 
-
 #ifndef GRABBAG_H
 #define GRABBAG_H
 
@@ -172,7 +171,6 @@ template <class T>
 void GrabBag<T>::operator+=(const std::vector<T> &vec){
     this->insert(vec);
 }
-
 
 
 #endif
