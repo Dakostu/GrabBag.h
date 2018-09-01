@@ -102,7 +102,7 @@ template <class T>
 inline std::size_t GrabBag<T>::getRandomIndex() {
     std::random_device device;
     std::mt19937 mt(device());
-    std::uniform_real_distribution<> dist(0, bagSize);
+    std::uniform_int_distribution<> dist(0, bagSize - 1);
 
     return dist(mt);
 }
