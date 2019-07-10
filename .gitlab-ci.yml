@@ -1,0 +1,9 @@
+stages: 
+- test 
+
+run-unit-tests:
+    stage: test
+    script:
+            - cd src
+            - g++ UnitTests.cpp -std=c++11 -o Tests 
+            - ./Tests
